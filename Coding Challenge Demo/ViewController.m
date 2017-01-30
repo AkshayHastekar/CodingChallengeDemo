@@ -123,8 +123,26 @@
 
 -(void)updateUIWithResult:(NSArray*)searchResults
 {
-    self.results = searchResults;
-    [self.listTableView reloadData];
+    __weak typeof(self) weakSelf = self;
+
+    if (searchResults.count)
+    {
+        [UIView animateWithDuration:0.2 animations:^{
+            weakSelf.locationTableContainerView.alpha = 1.0;
+        }];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.2 animations:^{
+            weakSelf.locationTableContainerView.alpha = [weakSelf.searchTextField isFirstResponder]?1:0;
+        }];
+    }
+    
+    if ([self.results isEqualToArray:searchResults] == NO)
+    {
+        self.results = searchResults;
+        [weakSelf.listTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationBottom];
+    }
 }
 
 #pragma mark - TableView DataSource
