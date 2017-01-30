@@ -28,6 +28,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //Adding shadow for better look and feel
+    {
+        self.locationTextContainerView.layer.cornerRadius = 2.0;
+        self.locationTextContainerView.layer.masksToBounds = NO;
+        self.locationTextContainerView.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.locationTextContainerView.layer.shadowOffset = CGSizeZero;
+        self.locationTextContainerView.layer.shadowOpacity = 0.3f;
+        
+        self.locationTableContainerView.layer.cornerRadius = 2.0;
+        self.locationTableContainerView.layer.masksToBounds = NO;
+        self.locationTableContainerView.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.locationTableContainerView.layer.shadowOffset = CGSizeZero;
+        self.locationTableContainerView.layer.shadowOpacity = 0.3f;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
