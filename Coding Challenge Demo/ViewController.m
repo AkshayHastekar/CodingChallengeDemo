@@ -147,6 +147,43 @@
 
 #pragma mark - TableView DataSource
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (self.results.count == 0)
+    {
+        tableView.alpha = 1.0;
+        CGRect rect = [tableView frame];
+        rect.origin = CGPointMake(0, 0);
+        rect.size.height = 100;
+        UIView *view = [[UIView alloc] initWithFrame:rect];
+        view.backgroundColor = [UIColor clearColor];
+        
+        UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 50, view.frame.size.width-40, 30)];
+        label1.font = [UIFont boldSystemFontOfSize:20.0];
+        label1.numberOfLines = 0;
+        label1.textAlignment = NSTextAlignmentCenter;
+        label1.textColor = [UIColor darkGrayColor];
+        label1.text = @"No Search results";
+        [view addSubview:label1];
+        
+        UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(label1.frame), CGRectGetWidth(label1.frame), 40)];
+        label2.font = [UIFont systemFontOfSize:15.0];
+        label2.numberOfLines = 0;
+        label2.textAlignment = NSTextAlignmentCenter;
+        label2.textColor = [UIColor grayColor];
+        label2.text = @"Please type to search location";
+        [view addSubview:label2];
+        
+        tableView.tableHeaderView = view;
+    }
+    else
+    {
+        tableView.tableHeaderView = nil;
+    }
+    
+    return 1;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.results count];
