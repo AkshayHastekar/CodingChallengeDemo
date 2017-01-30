@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "SearchTextField.h"
 #import "Config.h"
+#import "DetailViewController.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,SearchTextFieldDelegate>
 
@@ -206,6 +207,11 @@
     [self.view endEditing:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    DetailViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([DetailViewController class])];
+    
+    controller.resultInfo = self.results[indexPath.row];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark - TextField delegate
