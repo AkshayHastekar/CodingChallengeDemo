@@ -13,6 +13,8 @@
 		4C9644251E407B1100E2E2CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9644231E407B1100E2E2CB /* Main.storyboard */; };
 		4C9644271E407B1100E2E2CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C9644261E407B1100E2E2CB /* Assets.xcassets */; };
 		4C96442A1E407B1100E2E2CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9644281E407B1100E2E2CB /* LaunchScreen.storyboard */; };
+		4C9644381E407B1100E2E2CB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9644371E407B1100E2E2CB /* MapKit.framework */; };
+		4C96443B1E407B1100E2E2CB /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C96443A1E407B1100E2E2CB /* DetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,9 @@
 		4C9644261E407B1100E2E2CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C9644291E407B1100E2E2CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4C96442B1E407B1100E2E2CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C9644371E407B1100E2E2CB /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		4C9644391E407B1100E2E2CB /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		4C96443A1E407B1100E2E2CB /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9644381E407B1100E2E2CB /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +50,7 @@
 			children = (
 				4C9644191E407B1100E2E2CB /* Coding Challenge Demo */,
 				4C9644181E407B1100E2E2CB /* Products */,
+				4C9644361E407B1100E2E2CB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,10 +65,11 @@
 		4C9644191E407B1100E2E2CB /* Coding Challenge Demo */ = {
 			isa = PBXGroup;
 			children = (
-				4C96441D1E407B1100E2E2CB /* AppDelegate.h */,
-				4C96441E1E407B1100E2E2CB /* AppDelegate.m */,
+				4C9644351E407B1100E2E2CB /* ViewControllers */,
 				4C9644201E407B1100E2E2CB /* ViewController.h */,
 				4C9644211E407B1100E2E2CB /* ViewController.m */,
+				4C96441D1E407B1100E2E2CB /* AppDelegate.h */,
+				4C96441E1E407B1100E2E2CB /* AppDelegate.m */,
 				4C9644231E407B1100E2E2CB /* Main.storyboard */,
 				4C9644261E407B1100E2E2CB /* Assets.xcassets */,
 				4C9644281E407B1100E2E2CB /* LaunchScreen.storyboard */,
@@ -77,6 +85,23 @@
 				4C96441B1E407B1100E2E2CB /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4C9644351E407B1100E2E2CB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4C9644391E407B1100E2E2CB /* DetailViewController.h */,
+				4C96443A1E407B1100E2E2CB /* DetailViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4C9644361E407B1100E2E2CB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4C9644371E407B1100E2E2CB /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,6 +178,7 @@
 				4C9644221E407B1100E2E2CB /* ViewController.m in Sources */,
 				4C96441F1E407B1100E2E2CB /* AppDelegate.m in Sources */,
 				4C96441C1E407B1100E2E2CB /* main.m in Sources */,
+				4C96443B1E407B1100E2E2CB /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +333,7 @@
 				4C9644301E407B1100E2E2CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
