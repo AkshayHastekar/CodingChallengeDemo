@@ -50,6 +50,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="8bD-bl-sAA" id="UcX-Xk-O5E"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
@@ -140,7 +143,7 @@
                         <outlet property="locationTextContainerView" destination="x2S-yx-eYC" id="nCH-ip-TtB"/>
                         <outlet property="searchActivityIndicatorView" destination="lTY-p9-eeS" id="fBH-GH-Ycs"/>
                         <outlet property="searchTextField" destination="uHo-Ui-iX9" id="V0Q-aZ-hl2"/>
-                        <outlet property="tableContaienrBottomConstraint" destination="3TQ-Oc-jtb" id="qpq-6b-ufF"/>
+                        <outlet property="tableContainerBottomConstraint" destination="3TQ-Oc-jtb" id="Uxd-qN-wnK"/>
                         <segue destination="OXD-rd-5B5" kind="show" identifier="DetailViewController" id="PKt-Eh-wWu"/>
                     </connections>
                 </viewController>

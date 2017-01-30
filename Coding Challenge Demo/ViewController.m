@@ -18,7 +18,7 @@
 
 @property IBOutlet UIView *locationTableContainerView;
 @property IBOutlet UITableView *listTableView;
-@property IBOutlet NSLayoutConstraint *tableContaienrBottomConstraint;
+@property IBOutlet NSLayoutConstraint *tableContainerBottomConstraint;
 
 @end
 
@@ -30,6 +30,20 @@
     [super viewDidLoad];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter]  removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
 
 #pragma mark - TableView DataSource
 
@@ -68,7 +82,49 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [textField resignFirstResponder];
+    
     return YES;
+}
+
+#pragma mark - Keyboard Notifications
+
+-(void)keyboardWillShow:(NSNotification*)notification
+{
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    __weak typeof(self) weakSelf = self;
+
+    [UIView animateWithDuration:0.25 delay:0 options:(UIViewAnimationOptionBeginFromCurrentState | 7<<16) animations:^{
+        
+        weakSelf.tableContainerBottomConstraint.constant = keyboardRect.size.height+10;
+        
+        [weakSelf.view setNeedsLayout];
+        [weakSelf.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+-(void)keyboardWillHide:(NSNotification*)notification
+{
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    __weak typeof(self) weakSelf = self;
+
+    [UIView animateWithDuration:0.25 delay:0 options:(UIViewAnimationOptionBeginFromCurrentState | 7<<16) animations:^{
+        
+        weakSelf.tableContainerBottomConstraint.constant = 20;
+        
+        [weakSelf.view setNeedsLayout];
+        [weakSelf.view layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 @end
