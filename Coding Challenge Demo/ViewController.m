@@ -102,11 +102,14 @@
             
             if (error)
             {
-                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-                
-                [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-                
-                [self presentViewController:alertController animated:YES completion:nil];
+                if (error.code != NSURLErrorCancelled)
+                {
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                    
+                    [self presentViewController:alertController animated:YES completion:nil];
+                }
             }
             else if (httpResponse.statusCode == 200)
             {
@@ -218,7 +221,10 @@
 
 - (void)textFieldDidStartTyping:(nonnull SearchTextField *)textField
 {
-
+    if (self.searchDataTask != nil)
+    {
+        [self.searchDataTask cancel];
+    }
 }
 
 - (void)textFieldDidStopTyping:(nonnull SearchTextField *)textField
