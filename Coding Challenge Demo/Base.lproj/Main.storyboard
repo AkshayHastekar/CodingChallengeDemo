@@ -42,7 +42,7 @@
                                             <constraint firstAttribute="width" constant="15" id="iM7-EV-lVG"/>
                                         </constraints>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your text" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uHo-Ui-iX9">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your text" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uHo-Ui-iX9" customClass="SearchTextField">
                                         <rect key="frame" x="15" y="8" width="320" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="jMT-dy-H7L"/>

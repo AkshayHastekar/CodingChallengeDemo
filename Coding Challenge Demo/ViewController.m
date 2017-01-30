@@ -7,12 +7,13 @@
 //
 
 #import "ViewController.h"
+#import "SearchTextField.h"
 
-@interface ViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface ViewController ()<UITableViewDelegate,UITableViewDataSource,SearchTextFieldDelegate>
 
 @property IBOutlet UIView *locationTextContainerView;
 @property IBOutlet UIActivityIndicatorView *searchActivityIndicatorView;
-@property IBOutlet UITextField *searchTextField;
+@property IBOutlet SearchTextField *searchTextField;
 @property IBOutlet NSLayoutConstraint *activityContainerWidth;
 
 @property IBOutlet UIView *locationTableContainerView;
@@ -44,6 +45,26 @@
 
 
 #pragma mark - TextField delegate
+
+- (void)textFieldDidStartTyping:(nonnull SearchTextField *)textField
+{
+
+}
+
+- (void)textFieldDidStopTyping:(nonnull SearchTextField *)textField
+{
+
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+
+}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
