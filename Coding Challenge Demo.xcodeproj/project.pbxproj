@@ -16,6 +16,7 @@
 		4C9644381E407B1100E2E2CB /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9644371E407B1100E2E2CB /* MapKit.framework */; };
 		4C96443B1E407B1100E2E2CB /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C96443A1E407B1100E2E2CB /* DetailViewController.m */; };
 		4C9644401E407B1100E2E2CB /* SearchTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C96443F1E407B1100E2E2CB /* SearchTextField.m */; };
+		4C9644441E407B1100E2E2CB /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9644431E407B1100E2E2CB /* Config.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		4C96443A1E407B1100E2E2CB /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		4C96443E1E407B1100E2E2CB /* SearchTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTextField.h; sourceTree = "<group>"; };
 		4C96443F1E407B1100E2E2CB /* SearchTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTextField.m; sourceTree = "<group>"; };
+		4C9644421E407B1100E2E2CB /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		4C9644431E407B1100E2E2CB /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +71,7 @@
 		4C9644191E407B1100E2E2CB /* Coding Challenge Demo */ = {
 			isa = PBXGroup;
 			children = (
+				4C9644411E407B1100E2E2CB /* Config */,
 				4C96443C1E407B1100E2E2CB /* Vendor */,
 				4C9644351E407B1100E2E2CB /* ViewControllers */,
 				4C96441D1E407B1100E2E2CB /* AppDelegate.h */,
@@ -123,6 +127,15 @@
 				4C96443F1E407B1100E2E2CB /* SearchTextField.m */,
 			);
 			path = SearchTextField;
+			sourceTree = "<group>";
+		};
+		4C9644411E407B1100E2E2CB /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				4C9644421E407B1100E2E2CB /* Config.h */,
+				4C9644431E407B1100E2E2CB /* Config.m */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C9644221E407B1100E2E2CB /* ViewController.m in Sources */,
+				4C9644441E407B1100E2E2CB /* Config.m in Sources */,
 				4C96441F1E407B1100E2E2CB /* AppDelegate.m in Sources */,
 				4C96441C1E407B1100E2E2CB /* main.m in Sources */,
 				4C96443B1E407B1100E2E2CB /* DetailViewController.m in Sources */,
@@ -319,6 +333,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Coding Challenge Demo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.iftekhar.Coding-Challenge-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -330,6 +345,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Coding Challenge Demo/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.iftekhar.Coding-Challenge-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";

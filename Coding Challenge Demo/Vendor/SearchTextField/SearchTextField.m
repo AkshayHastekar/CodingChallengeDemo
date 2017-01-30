@@ -67,16 +67,16 @@
     {
         _isTyping = NO;
 
-        if ([self.delegate respondsToSelector:@selector(textFieldDidStopTyping:)])
-        {
-            [self.delegate textFieldDidStopTyping:self];
-        }
-        
         if (searchDelayTimer != nil)
         {
             [searchDelayTimer invalidate];
             searchDelayTimer = nil;
         }
+    }
+
+    if ([self.delegate respondsToSelector:@selector(textFieldDidStopTyping:)])
+    {
+        [self.delegate textFieldDidStopTyping:self];
     }
 }
 

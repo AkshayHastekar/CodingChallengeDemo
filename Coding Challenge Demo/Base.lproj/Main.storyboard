@@ -25,13 +25,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x2S-yx-eYC">
-                                <rect key="frame" x="20" y="84" width="335" height="60"/>
+                                <rect key="frame" x="10" y="84" width="355" height="60"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Na-g1-95e">
-                                        <rect key="frame" x="0.0" y="8" width="15" height="44"/>
+                                        <rect key="frame" x="0.0" y="8" width="27" height="44"/>
                                         <subviews>
                                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lTY-p9-eeS">
-                                                <rect key="frame" x="-3" y="12" width="20" height="20"/>
+                                                <rect key="frame" x="3" y="12" width="20" height="20"/>
                                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </activityIndicatorView>
                                         </subviews>
@@ -39,17 +39,17 @@
                                         <constraints>
                                             <constraint firstItem="lTY-p9-eeS" firstAttribute="centerY" secondItem="6Na-g1-95e" secondAttribute="centerY" id="4NO-dN-XXV"/>
                                             <constraint firstItem="lTY-p9-eeS" firstAttribute="centerX" secondItem="6Na-g1-95e" secondAttribute="centerX" id="TXt-ve-lK2"/>
-                                            <constraint firstAttribute="width" constant="15" id="iM7-EV-lVG"/>
+                                            <constraint firstAttribute="width" constant="27" id="iM7-EV-lVG"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your text" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uHo-Ui-iX9" customClass="SearchTextField">
-                                        <rect key="frame" x="15" y="8" width="320" height="44"/>
+                                        <rect key="frame" x="27" y="8" width="328" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="jMT-dy-H7L"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
                                         <connections>
                                             <outlet property="delegate" destination="8bD-bl-sAA" id="UcX-Xk-O5E"/>
                                         </connections>
@@ -67,22 +67,22 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boY-SC-3ai">
-                                <rect key="frame" x="20" y="154" width="335" height="493"/>
+                                <rect key="frame" x="10" y="154" width="355" height="493"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qeR-9G-71f">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="493"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="493"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <view key="tableFooterView" contentMode="scaleToFill" id="hyu-Ti-yqv">
-                                            <rect key="frame" x="0.0" y="72" width="335" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="72" width="355" height="0.0"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </view>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UITableViewCell" textLabel="wAR-Hp-Avy" detailTextLabel="ssp-iq-WOq" style="IBUITableViewCellStyleSubtitle" id="EOn-bd-yOu">
-                                                <rect key="frame" x="0.0" y="28" width="335" height="44"/>
+                                                <rect key="frame" x="0.0" y="28" width="355" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EOn-bd-yOu" id="obl-c8-Pf3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="355" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wAR-Hp-Avy">
@@ -127,17 +127,16 @@
                             <constraint firstItem="GGf-Hb-Ree" firstAttribute="leading" secondItem="hmy-Xm-twD" secondAttribute="leading" id="E7o-gc-LF3"/>
                             <constraint firstItem="boY-SC-3ai" firstAttribute="trailing" secondItem="x2S-yx-eYC" secondAttribute="trailing" id="GLv-qI-Cl4"/>
                             <constraint firstItem="x2S-yx-eYC" firstAttribute="top" secondItem="Abj-HY-lse" secondAttribute="bottom" constant="20" id="ORI-PH-hLD"/>
-                            <constraint firstItem="x2S-yx-eYC" firstAttribute="leading" secondItem="hmy-Xm-twD" secondAttribute="leading" constant="20" id="Oaj-xw-GEy"/>
+                            <constraint firstItem="x2S-yx-eYC" firstAttribute="leading" secondItem="hmy-Xm-twD" secondAttribute="leading" constant="10" id="Oaj-xw-GEy"/>
                             <constraint firstAttribute="trailing" secondItem="GGf-Hb-Ree" secondAttribute="trailing" id="bST-dk-mgW"/>
                             <constraint firstItem="boY-SC-3ai" firstAttribute="leading" secondItem="x2S-yx-eYC" secondAttribute="leading" id="dWj-JU-yhG"/>
                             <constraint firstAttribute="bottom" secondItem="GGf-Hb-Ree" secondAttribute="bottom" id="iuO-9r-dck"/>
-                            <constraint firstAttribute="trailing" secondItem="x2S-yx-eYC" secondAttribute="trailing" constant="20" id="jFQ-RL-QCH"/>
+                            <constraint firstAttribute="trailing" secondItem="x2S-yx-eYC" secondAttribute="trailing" constant="10" id="jFQ-RL-QCH"/>
                             <constraint firstItem="boY-SC-3ai" firstAttribute="top" secondItem="x2S-yx-eYC" secondAttribute="bottom" constant="10" id="rHG-6J-tLR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Search" id="851-tJ-Eqj"/>
                     <connections>
-                        <outlet property="activityContainerWidth" destination="iM7-EV-lVG" id="3W5-zt-oNj"/>
                         <outlet property="listTableView" destination="qeR-9G-71f" id="288-Fd-hj0"/>
                         <outlet property="locationTableContainerView" destination="boY-SC-3ai" id="pEk-uT-aaC"/>
                         <outlet property="locationTextContainerView" destination="x2S-yx-eYC" id="nCH-ip-TtB"/>

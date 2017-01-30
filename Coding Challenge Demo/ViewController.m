@@ -8,13 +8,16 @@
 
 #import "ViewController.h"
 #import "SearchTextField.h"
+#import "Config.h"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource,SearchTextFieldDelegate>
+
+@property NSURLSessionDataTask *searchDataTask;
+@property NSArray<NSDictionary*> *results;
 
 @property IBOutlet UIView *locationTextContainerView;
 @property IBOutlet UIActivityIndicatorView *searchActivityIndicatorView;
 @property IBOutlet SearchTextField *searchTextField;
-@property IBOutlet NSLayoutConstraint *activityContainerWidth;
 
 @property IBOutlet UIView *locationTableContainerView;
 @property IBOutlet UITableView *listTableView;
@@ -43,6 +46,8 @@
         self.locationTableContainerView.layer.shadowOffset = CGSizeZero;
         self.locationTableContainerView.layer.shadowOpacity = 0.3f;
     }
+
+    [self updateUIWithResult:@[]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -60,18 +65,93 @@
     [[NSNotificationCenter defaultCenter]  removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
+#pragma mark - API Handling
+
+- (void)getPlacesForSearchText:(NSString*)searchText
+{
+    if (self.searchDataTask != nil)
+    {
+        [self.searchDataTask cancel];
+    }
+    
+    NSString *urlPath = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/autocomplete/json?key=%@&input=%@&language=en-EN",kGooglePlaceAPIKey,searchText];
+    
+    urlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+
+    NSURL *url = [NSURL URLWithString:urlPath];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
+    [request setHTTPMethod:@"POST"];
+    
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject];
+    
+    [self.searchActivityIndicatorView startAnimating];
+    
+    __weak typeof(self) weakSelf = self;
+
+    self.searchDataTask = [defaultSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        weakSelf.searchDataTask = nil;
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            [weakSelf.searchActivityIndicatorView stopAnimating];
+            
+            if (error)
+            {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+            }
+            else if (httpResponse.statusCode == 200)
+            {
+                NSDictionary *jsonDict= [NSJSONSerialization  JSONObjectWithData:data options:kNilOptions error:nil];
+                
+                [self updateUIWithResult:jsonDict[@"predictions"]];
+            }
+        }];
+    }];
+    
+    [self.searchDataTask resume];
+}
+
+#pragma mark - Update UI
+
+-(void)updateUIWithResult:(NSArray*)searchResults
+{
+    self.results = searchResults;
+    [self.listTableView reloadData];
+}
+
 #pragma mark - TableView DataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return [self.results count];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [UITableViewCell new];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+    
+    cell.textLabel.text = self.results[indexPath.row][@"description"];
+    NSArray *types = self.results[indexPath.row][@"types"];
+    cell.detailTextLabel.text = [types componentsJoinedByString:@", "];
+    return  cell;
 }
 
+#pragma mark - TableView Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.view endEditing:YES];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 #pragma mark - TextField delegate
 
@@ -82,17 +162,26 @@
 
 - (void)textFieldDidStopTyping:(nonnull SearchTextField *)textField
 {
-
+    NSString *searchText = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if([searchText length] > 0)
+    {
+        [self getPlacesForSearchText:searchText];
+    }
+    else
+    {
+        [self updateUIWithResult:@[]];
+    }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-
+    [self updateUIWithResult:self.results];
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-
+    [self updateUIWithResult:self.results];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
