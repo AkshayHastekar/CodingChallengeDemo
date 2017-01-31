@@ -187,4 +187,62 @@
     return  cell;
 }
 
+#pragma mark - TableView Delegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    switch (indexPath.section)
+    {
+        case 2:
+        {
+            NSString *websiteString = self.detailInfo[@"result"][@"website"];
+            
+            if (websiteString)
+            {
+                NSURL *websiteURL = [NSURL URLWithString:websiteString];
+                
+                if ([[UIApplication sharedApplication] canOpenURL:websiteURL])
+                {
+                    SFSafariViewController *controller = [[SFSafariViewController alloc] initWithURL:websiteURL];
+                    [self presentViewController:controller animated:YES completion:nil];
+                }
+            }
+        }
+            break;
+        case 3:
+        {
+            NSString *phoneString = self.detailInfo[@"result"][@"international_phone_number"];
+            
+            if (phoneString)
+            {
+                NSURL *phoneURL = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@",[phoneString stringByReplacingOccurrencesOfString:@" " withString:@""]]];
+                
+                if ([[UIApplication sharedApplication] canOpenURL:phoneURL])
+                {
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[NSString stringWithFormat:@"Call %@?",phoneString] preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"cancel", nil) style:UIAlertActionStyleCancel handler:nil]];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"Call" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [[UIApplication sharedApplication] openURL:phoneURL];
+                    }]];
+                    
+                    [self presentViewController:alertController animated:YES completion:nil];
+                }
+                else
+                {
+                    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Cannot make voice call" message:@"Your device doesn't support voice calling." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                    
+                    [self presentViewController:alertController animated:YES completion:nil];
+                }
+            }
+        }
+            break;
+    }
+}
+
 @end
