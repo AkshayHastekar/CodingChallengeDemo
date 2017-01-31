@@ -7,18 +7,135 @@
 //
 
 #import "DetailViewController.h"
+#import <MapKit/MapKit.h>
+#import "Config.h"
+#import <SafariServices/SafariServices.h>
 
-@interface DetailViewController ()
+@interface DetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
-@property IBOutlet UILabel *labelDetails;
+@property NSDictionary *detailInfo;
+
+@property IBOutlet UITableView *detailsTableView;
+@property IBOutlet MKMapView *mapView;
+
+@property IBOutlet UIBarButtonItem *refreshBarItem;
+@property UIBarButtonItem *activityBarItem;
+@property UIActivityIndicatorView *activityIndicatorView;
 
 @end
 
 @implementation DetailViewController
 
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.title = self.resultInfo[@"description"];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.activityBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicatorView];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    [self getLocationDetailsWithPlaceID:self.resultInfo[@"place_id"]];
+}
+
+#pragma mark - API Handling
+
+-(void)getLocationDetailsWithPlaceID:(NSString*)placeID
+{
+    NSString *urlPath = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?key=%@&placeid=%@",kGooglePlaceAPIKey,placeID];
+    
+    urlPath = [urlPath stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    
+    NSURL *url = [NSURL URLWithString:urlPath];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60];
+    [request setHTTPMethod:@"POST"];
+    
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject];
+    
+    [self.navigationItem setRightBarButtonItem:self.activityBarItem animated:YES];
+    [self.activityIndicatorView startAnimating];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSURLSessionDataTask *dataTask = [defaultSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
+        
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            [weakSelf.navigationItem setRightBarButtonItem:self.refreshBarItem animated:YES];
+            [weakSelf.activityIndicatorView stopAnimating];
+            
+            if (error)
+            {
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+                
+                [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                
+                [self presentViewController:alertController animated:YES completion:nil];
+            }
+            else if (httpResponse.statusCode == 200)
+            {
+                NSDictionary *jsonDict= [NSJSONSerialization  JSONObjectWithData:data options:kNilOptions error:nil];
+                
+                weakSelf.detailInfo = jsonDict;
+                [self updateUI];
+            }
+        }];
+    }];
+    
+    [dataTask resume];
+}
+
+#pragma mark - Update UI
+
+- (IBAction)refreshAction:(UIBarButtonItem *)sender
+{
+    [self getLocationDetailsWithPlaceID:self.resultInfo[@"place_id"]];
+}
+
+
+-(void)updateUI
+{
+    NSDictionary *locationDict = self.detailInfo[@"result"][@"geometry"][@"location"];
+    
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake([locationDict[@"lat"] doubleValue], [locationDict[@"lng"] doubleValue]);
+    MKCoordinateSpan span = MKCoordinateSpanMake(1, 1);
+
+    MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
+    
+    [self.mapView setRegion:region animated:YES];
+    
+    if (self.mapView.annotations.count == 0)
+    {
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        [annotation setCoordinate:center];
+        annotation.title = self.detailInfo[@"result"][@"name"];
+        annotation.subtitle = self.detailInfo[@"result"][@"formatted_address"];
+        
+        [self.mapView addAnnotation:annotation];
+    }
+}
+
+#pragma mark - TableView DataSource
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [UITableViewCell new];
 }
 
 @end
