@@ -14,7 +14,7 @@
 @interface DetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property NSDictionary *detailInfo;
-
+@property NSArray<NSString*> *placeInfoList;
 @property IBOutlet UITableView *detailsTableView;
 @property IBOutlet MKMapView *mapView;
 
@@ -32,6 +32,7 @@
 {
     [super viewDidLoad];
     
+    self.placeInfoList = @[@"Address",@"Ratings",@"Website",@"Phone"];
     self.navigationItem.title = self.resultInfo[@"description"];
     
     self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -124,18 +125,66 @@
         
         [self.mapView addAnnotation:annotation];
     }
+
+    [self.detailsTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.placeInfoList.count)] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - TableView DataSource
 
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.placeInfoList.count;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return self.placeInfoList[section];
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [UITableViewCell new];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+    
+    switch (indexPath.section)
+    {
+        case 0:
+        {
+            cell.textLabel.text = self.detailInfo[@"result"][@"name"]?:(self.resultInfo[@"description"]?:@"-");
+            cell.detailTextLabel.text = self.detailInfo[@"result"][@"formatted_address"]?:@"-";
+        }
+            break;
+        case 1:
+        {
+            NSNumber *rating = self.detailInfo[@"result"][@"rating"];
+            cell.textLabel.text = rating?[rating stringValue]:@"-";
+            cell.detailTextLabel.text = @"";
+        }
+            break;
+        case 2:
+        {
+            cell.textLabel.text = self.detailInfo[@"result"][@"website"]?:@"-";
+            cell.detailTextLabel.text = @"";
+        }
+            break;
+        case 3:
+        {
+            cell.textLabel.text = self.detailInfo[@"result"][@"international_phone_number"]?:@"-";
+            cell.detailTextLabel.text = @"";
+        }
+            break;
+            
+        default:
+            cell.textLabel.text = @"-";
+            cell.detailTextLabel.text = @"-";
+            break;
+    }
+    
+    return  cell;
 }
 
 @end
